@@ -3,6 +3,7 @@
     <option name="myName" value="Project Default" />
     <inspection_tool class="CheckNodeTest" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="DuplicateAlternationBranch" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="EjsUnresolvedInclude" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="EmptyAlternationBranch" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="EscapedMetaCharacter" enabled="false" level="INFORMATION" enabled_by_default="false" />
     <inspection_tool class="HardwiredNamespacePrefix" enabled="false" level="WARNING" enabled_by_default="false" />
@@ -12,13 +13,18 @@
       <option name="FLAG_EXPLICIT_CONVERSION" value="true" />
       <option name="IGNORE_NODESET_TO_BOOLEAN_VIA_STRING" value="true" />
     </inspection_tool>
+    <inspection_tool class="IncompatibleMaskJS" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="IndexZeroUsage" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="JSBitwiseOperatorUsage" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="LessResolvedByNameOnly" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="LessUnresolvedMixin" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="LessUnresolvedVariable" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="LossyEncoding" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="NonAsciiCharacters" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="OctalEscape" enabled="false" level="INFORMATION" enabled_by_default="false" />
+    <inspection_tool class="PointlessBitwiseExpressionJS" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="m_ignoreExpressionsContainingConstants" value="false" />
+    </inspection_tool>
     <inspection_tool class="RedundantTypeConversion" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="CHECK_ANY" value="false" />
     </inspection_tool>
@@ -27,12 +33,14 @@
     <inspection_tool class="SassScssUnresolvedMixin" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="SassScssUnresolvedPlaceholderSelector" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="SassScssUnresolvedVariable" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="ShiftOutOfRangeJS" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="SingleCharAlternation" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="SpellCheckingInspection" enabled="false" level="TYPO" enabled_by_default="false">
       <option name="processCode" value="true" />
       <option name="processLiterals" value="true" />
       <option name="processComments" value="true" />
     </inspection_tool>
+    <inspection_tool class="TaskProblemsInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="TypeScriptAccessibilityCheck" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="TypeScriptCheckImport" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="TypeScriptMissingAugmentationImport" enabled="false" level="INFORMATION" enabled_by_default="false" />
