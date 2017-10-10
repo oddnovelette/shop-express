@@ -1,5 +1,6 @@
 body {
   padding-top: 54px;
+  background: #EDEDED;
 }
 
 @media (min-width: 992px) {
@@ -7,11 +8,10 @@ body {
     padding-top: 56px;
   }
 }
-
-.pagination {
-  margin-bottom: 15px;
+.breadcrumb{
+    background-color: #DBDBDB;
+    margin-bottom: 30px;
 }
-.text {padding-top: 60px;}
 
 .price {
 	color:#666666;
