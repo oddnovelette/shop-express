@@ -1,30 +1,28 @@
-var express = require('express');
-var mensRouter = express.Router();
-var mongodb = require('mongodb').MongoClient;
+'use strict';
 
-var router = function (nav) {
-    mensRouter.route('/')
-        .get(function (req, res) {
-            var url = 'mongodb://localhost:27017/shopapp';
+const express = require('express');
+const mensClothing = require('../mens/mensClothing');
+const mensAccessories = require('../mens/mensAccessories');
+const mongodb = require('mongodb').MongoClient;
 
-            mongodb.connect(url, function (err, db) {
-                var collection = db.collection('categories');
+const router = express.Router();
+router.get('/', (req, res, next) => {
+    const url = 'mongodb://localhost:27017/shopapp';
 
-                collection.aggregate([
-                    {$unwind: '$categories'},
-                    {$match: {'categories.parent_category_id': 'mens'}}
-                ]).toArray(
-                    function (err, results) {
-                        res.render('categsView', {
-                            title: 'Mens',
-                            nav: nav,
-                            result: results
-                        });
-                    }
-                );
-            });
+    mongodb.connect(url, (err, db) => {
+        const collection = db.collection('categories');
+
+        collection.aggregate([
+            {$unwind: '$categories'},
+            {$match: {'categories.parent_category_id': 'mens'}}
+        ])
+            .toArray((err, results) => {
+            res.render('categsView', {result: results}
+            );
         });
+    });
+});
 
-    return mensRouter;
-};
+router.use('/mens-clothing', mensClothing);
+router.use('/mens-accessories', mensAccessories);
 module.exports = router;

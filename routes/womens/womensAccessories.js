@@ -1,32 +1,29 @@
-var express = require('express');
-var womensAccessoriesRouter = express.Router();
-var mongodb = require('mongodb').MongoClient;
+'use strict';
 
-var router = function (nav) {
-    womensAccessoriesRouter.route('/')
-        .get(function (req, res) {
-            var url = 'mongodb://localhost:27017/shopapp';
+const express = require('express');
+const womensScarves = require('../womens/womensScarves');
+const womensShoes = require('../womens/womensShoes');
+const mongodb = require('mongodb').MongoClient;
 
-            mongodb.connect(url, function (err, db) {
-                var collection = db.collection('categories');
+const router = express.Router();
 
-                collection.aggregate([
-                    {$unwind:  {path: '$categories'}},
-                    {$unwind:  {path: '$categories.categories', preserveNullAndEmptyArrays: true}},
-                    {$match: {'categories.categories.parent_category_id': 'womens-accessories'}}
-                ]).toArray(
-                    function (err, results) {
-                        res.render('categsSubView', {
-                            title: 'Women\'s Accessories',
-                            pre: 'Womens',
-                            nav: nav,
-                            result: results
-                        });
-                    }
-                );
-            });
-        });
+router.get('/', (req, res, next) => {
+    const url = 'mongodb://localhost:27017/shopapp';
 
-    return womensAccessoriesRouter;
-};
+    mongodb.connect(url, (err, db) => {
+        const collection = db.collection('categories');
+
+        collection.aggregate([
+            {$unwind:  {path: '$categories'}},
+            {$unwind:  {path: '$categories.categories'}},
+            {$match: {'categories.categories.parent_category_id': 'mens-accessories'}}
+        ])
+            .toArray((err, results) => {
+                res.render('categsSubView', {result: results}
+                )});
+    });
+});
+
+router.use('/womens-accessories-scarves', womensScarves);
+router.use('/womens-accessories-shoes', womensShoes);
 module.exports = router;

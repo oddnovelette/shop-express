@@ -1,32 +1,35 @@
-var express = require('express');
-var womensClothingRouter = express.Router();
-var mongodb = require('mongodb').MongoClient;
+'use strict';
 
-var router = function (nav) {
-    womensClothingRouter.route('/')
-        .get(function (req, res) {
-            var url = 'mongodb://localhost:27017/shopapp';
+const express = require('express');
+const womensOutfits = require('../womens/womensOutfits');
+const womensTops = require('../womens/womensTops');
+const womensDresses = require('../womens/womensDresses');
+const womensBottoms = require('../womens/womensDresses');
+const womensFeelingRed = require('../womens/womensRed');
+const mongodb = require('mongodb').MongoClient;
 
-            mongodb.connect(url, function (err, db) {
-                var collection = db.collection('categories');
+const router = express.Router();
 
-                collection.aggregate([
-                    {$unwind:  {path: '$categories'}},
-                    {$unwind:  {path: '$categories.categories', preserveNullAndEmptyArrays: true}},
-                    {$match: {'categories.categories.parent_category_id': 'womens-clothing'}}
-                ]).toArray(
-                    function (err, results) {
-                        res.render('categsSubView', {
-                            title: 'Women\'s Clothing',
-                            pre: 'Womens',
-                            nav: nav,
-                            result: results
-                        });
-                    }
-                );
-            });
-        });
+router.get('/', (req, res, next) => {
+    const url = 'mongodb://localhost:27017/shopapp';
 
-    return womensClothingRouter;
-};
+    mongodb.connect(url, (err, db) => {
+        const collection = db.collection('categories');
+
+        collection.aggregate([
+            {$unwind:  {path: '$categories'}},
+            {$unwind:  {path: '$categories.categories'}},
+            {$match: {'categories.categories.parent_category_id': 'womens-clothing'}}
+        ])
+            .toArray((err, results) => {
+                res.render('categsSubView', {result: results}
+                )});
+    });
+});
+
+router.use('/womens-outfits', womensOutfits);
+router.use('/womens-clothing-tops', womensTops);
+router.use('/womens-clothing-dresses', womensDresses);
+router.use('/womens-clothing-bottoms', womensBottoms);
+router.use('/womens-clothing-feeling-red', womensFeelingRed);
 module.exports = router;

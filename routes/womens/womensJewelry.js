@@ -1,32 +1,31 @@
-var express = require('express');
-var womensJewelryRouter = express.Router();
-var mongodb = require('mongodb').MongoClient;
+'use strict';
 
-var router = function (nav) {
-    womensJewelryRouter.route('/')
-        .get(function (req, res) {
-            var url = 'mongodb://localhost:27017/shopapp';
+const express = require('express');
+const womensEarrings = require('../womens/womensEarrings');
+const womensBracelets = require('../womens/womensBracelets');
+const womensNecklaces = require('../womens/womensNecklaces');
+const mongodb = require('mongodb').MongoClient;
 
-            mongodb.connect(url, function (err, db) {
-                var collection = db.collection('categories');
+const router = express.Router();
 
-                collection.aggregate([
-                    {$unwind:  {path: '$categories'}},
-                    {$unwind:  {path: '$categories.categories', preserveNullAndEmptyArrays: true}},
-                    {$match: {'categories.categories.parent_category_id': 'womens-jewelry'}},
-                ]).toArray(
-                    function (err, results) {
-                        res.render('categsSubView', {
-                            title: 'Womens Jewelry',
-                            pre: 'Womens',
-                            nav: nav,
-                            result: results
-                        });
-                    }
-                );
-            });
-        });
+router.get('/', (req, res, next) => {
+    const url = 'mongodb://localhost:27017/shopapp';
 
-    return womensJewelryRouter;
-};
+    mongodb.connect(url, (err, db) => {
+        const collection = db.collection('categories');
+
+        collection.aggregate([
+            {$unwind:  {path: '$categories'}},
+            {$unwind:  {path: '$categories.categories'}},
+            {$match: {'categories.categories.parent_category_id': 'womens-jewelry'}}
+        ])
+            .toArray((err, results) => {
+                res.render('categsSubView', {result: results}
+                )});
+    });
+});
+
+router.use('/womens-jewelry-earrings', womensEarrings);
+router.use('/womens-jewlery-bracelets', womensBracelets);
+router.use('/womens-jewelry-necklaces', womensNecklaces);
 module.exports = router;

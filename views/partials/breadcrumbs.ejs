@@ -1,0 +1,9 @@
+ <div class="row">
+        <div class="col-sm-12">
+            <nav class="breadcrumb">
+                <% for (var i=0; i<breadcrumb.length; i++) {%>
+                <a class="breadcrumb-item" href="<%=breadcrumb[i].url%>"><%=breadcrumb[i].label%></a>
+                <%}%>
+            </nav>
+        </div>
+    </div>

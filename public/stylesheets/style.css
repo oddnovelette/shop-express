@@ -11,6 +11,8 @@ body {
 .breadcrumb{
     background-color: #DBDBDB;
     margin-bottom: 30px;
+    text-transform: capitalize;
+    font-weight: bold;
 }
 
 .price {

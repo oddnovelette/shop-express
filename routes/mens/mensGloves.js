@@ -1,64 +1,40 @@
-var express = require('express');
-var mensGlovesRouter = express.Router();
-var mongodb = require('mongodb').MongoClient;
-var objectId = require('mongodb').ObjectID;
+'use strict';
 
-var router = function (nav) {
-    mensGlovesRouter.route('/')
-        .get(function (req, res) {
-            var url = 'mongodb://localhost:27017/shopapp';
+const express = require('express');
+const singleProduct = require('../singleProduct');
+const mongodb = require('mongodb').MongoClient;
 
-            mongodb.connect(url, function (err, db) {
-                var collection = db.collection('products');
+const router = express.Router();
 
-                collection.aggregate([
-                    {$match: {'primary_category_id': 'mens-accessories-gloves'}},
-                    {$unwind:  {path: '$image_groups'}},
-                    {$unwind:  {path: '$image_groups.images'}},
-                    {$match: {'image_groups.view_type': 'large'}},
-                    {$group: {
-                        _id: '$_id',
-                        img: {$first: '$image_groups.images.link'},
-                        name: {$first: '$name'},
-                        price: {$first:'$price'},
-                        currency: {$first:'$currency'},
-                        short_description:{$first: '$short_description'}
-                    }}
-                ]).toArray(
-                    function (err, results) {
-                        res.render('productsView', {
-                            title: 'Mens Gloves',
-                            pre: 'Mens Accessories',
-                            nav: nav,
-                            prefix: '/mens-accessories-gloves/',
-                            result: results
-                        });
-                    }
-                );
-            });
-        });
+router.get('/', (req, res, next) => {
+    const url = 'mongodb://localhost:27017/shopapp';
 
-    mensGlovesRouter.route('/:id')
-        .get(function (req, res) {
-            var id = new objectId(req.params.id);
-            var url = 'mongodb://localhost:27017/shopapp';
+    mongodb.connect(url, (err, db) => {
+        const collection = db.collection('products');
 
-            mongodb.connect(url, function (err, db) {
-                var collection = db.collection('products');
+        collection.aggregate([
+            {$match: {'primary_category_id': 'mens-accessories-gloves'}},
+            {$unwind: {path: '$image_groups'}},
+            {$unwind: {path: '$image_groups.images'}},
+            {$match: {'image_groups.view_type': 'medium'}},
+            {$group: {
+                _id: '$_id',
+                img: {$first: '$image_groups.images.link'},
+                name: {$first: '$name'},
+                price: {$first:'$price'},
+                currency: {$first:'$currency'},
+                short_description:{$first: '$short_description'}
+            }}
+        ]).toArray((err, results) => {
+                res.render('productsView', {
+                    result: results,
+                    url: req.originalUrl
+                });
+            }
+        );
+    });
+});
 
-                collection.findOne({_id: id},
-                    function (err, results) {
-                        res.render('productView', {
-                            title: 'Mens Gloves',
-                            pre: 'Mens Accessories',
-                            nav: nav,
-                            result: results
-                        });
-                    }
-                );
-            });
-        });
-
-    return mensGlovesRouter;
-};
+router.use('/', singleProduct);
 module.exports = router;
+
