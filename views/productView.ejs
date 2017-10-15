@@ -17,38 +17,23 @@
     <% include partials/breadcrumbs %>
 
     <!-- Product Item Heading -->
-    <h1 class="my-4"><%=result.name%><br>
-        <small>base № <%=result.id%></small>
+    <h1 class="my-4"><%=result[0].name%><br>
+        <small>base № <%=result[0].id%></small>
     </h1>
 
     <!-- Single Product -->
     <div class="row">
-
-        <div class="col-md-8">
-            <img class="img-fluid" src="http://placehold.it/300x300" alt="">
+        <div class="col-md-6">
+            <img class="img img-responsive" src="/images/<%=result[0].img%>" alt="<%=result[0].imgalt%>">
+            <img class="img img-responsive" src="/images/<%=result[0].img2%>" alt="<%=result[0].imgalt%>">
         </div>
 
         <div class="col-md-4">
-            <h3 class="my-3"><%=result.name%></h3>
+            <h3 class="my-3"><%=result[0].name%></h3>
             <img class="img-fluid" src="#" alt="">
-            <p><%=result.long_description%></p>
-            <span class="price">Price: <%=result.price%>- <%=result.currency%></span>
-        </div>
-    </div>
-    <!-- /.row -->
-
-    <!-- Other images Row -->
-    <h3 class="my-4">More pictures</h3>
-
-    <div class="row">
-        <div class="col-md-3 col-sm-6 mb-4">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-            </a>
+            <p><%=result[0].long_description%></p>
+            <span class="price">Price: <%=result[0].price%>- <%=result[0].currency%></span><br><br><br>
+            <a href="/to-cart/" class="btn btn-lg btn-success btn-block" role="button">Add to cart <i class="fa fa-cart-plus" aria-hidden="true"></i></a>
         </div>
     </div>
     <!-- /.row -->

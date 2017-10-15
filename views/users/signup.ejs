@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <% include ../partials/nav %>
+</nav>
+
+<!-- Login form -->
+
+<div class="container">
+    <div class="row">
+    <div class="col-md-5 col-sm-12"><br><br>
+    <form id="form" name="form" class="form-signin" action="/signup" method="post">
+        <h3 class="form-signin-heading">New user? Sign up here!</h3><br><br>
+        <% if (hasErrors) {%>
+        <div class="alert alert-danger">
+            <% for (var message in messages) {%>
+            <p><%= messages[message] %></p>
+            <%}%>
+        </div>
+        <%}%>
+        <h6>Enter your email</h6>
+        <input type="text" name="email" class="form-control" placeholder="Email address" required autofocus><br>
+
+        <h6>Password</h6>
+        <input type="password" name="password" id="password" class="form-control" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" required><br>
+
+        <h6>Confirm password</h6>
+        <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" required><br>
+
+        <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
+        <input type="submit" name="submit" class="btn btn-lg btn-primary btn-block" value="Sign Up"/>
+    </form>
+    </div>
+    </div>
+</div> <!-- /container -->
+
+<% include ../partials/footer %>
+
+<% include confirm_pass %>
+
+</body>
+</html>

@@ -6,7 +6,24 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
             <% for (var i=0; i<nav.length; i++) {%>
-            <li class="nav-item"><a class="nav-link" href="<%=nav[i].Link%>"><%=nav[i].Text%></a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=nav[i].Link%>"><%=nav[i].Text%></a>
+            </li>
+            <%}%>
+                <% if (login) {%>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Log out</a>
+            </li>
+                <%} else {%>
+            <li class="nav-item">
+                <a class="nav-link" href="/signin">Sign In</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/signup">Sign Up</a>
+            </li>
             <%}%>
         </ul>
     </div>

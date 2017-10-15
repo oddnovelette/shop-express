@@ -1,57 +1,31 @@
 'use strict';
 
-const express = require('express');
-const path = require('path');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const session = require('express-session');
-const csurf = require('csurf');
-const breadcrumb = require('express-url-breadcrumb');
+const express       = require('express');
+const path          = require('path');
+const favicon       = require('serve-favicon');
+const logger        = require('morgan');
+const cookieParser  = require('cookie-parser');
+const bodyParser    = require('body-parser');
+const session       = require('express-session');
+const csurf         = require('csurf');
+const breadcrumb    = require('express-url-breadcrumb');
+const mongoose      = require('mongoose');
+const passport      = require('passport');
+const flash         = require('connect-flash');
+const validator     = require('express-validator');
+const sesstorage    = require('connect-mongo')(session);
 
-
-/* GET home page. */
-
-//var index = require('./routes/index');
-//var mensRouter = require('./routes/mens/mens')(nav);
-/*
-var mensClothingRouter = require('./routes/mens/mensClothing')(nav);
-var mensAccessoriesRouter = require('./routes/mens/mensAccessories')(nav);
-var mensDressRouter = require('./routes/mens/mensDress')(nav);
-var mensShortsRouter = require('./routes/mens/mensShorts')(nav);
-var mensJacketsRouter = require('./routes/mens/mensJackets')(nav);
-var mensSuitsRouter = require('./routes/mens/mensSuits')(nav);
-var mensPantsRouter = require('./routes/mens/mensPants')(nav);
-var mensTiesRouter = require('./routes/mens/mensTies')(nav);
-var mensGlovesRouter = require('./routes/mens/mensGloves')(nav);
-var mensLuggageRouter = require('./routes/mens/mensLuggage')(nav);
-
-var womensRouter = require('./routes/womens/womens')(nav);
-var womensClothingRouter = require('./routes/womens/womensClothing')(nav);
-var womensJewelryRouter = require('./routes/womens/womensJewelry')(nav);
-var womensAccessoriesRouter = require('./routes/womens/womensAccessories')(nav);
-var womensOutfitsRouter = require('./routes/womens/womensOutfits')(nav);
-var womensTopsRouter = require('./routes/womens/womensTops')(nav);
-var womensDressesRouter = require('./routes/womens/womensDresses')(nav);
-var womensBottomsRouter = require('./routes/womens/womensBottoms')(nav);
-var womensJacketsRouter = require('./routes/womens/womensJackets')(nav);
-var womensRedRouter = require('./routes/womens/womensRed')(nav);
-var womensEarringsRouter = require('./routes/womens/womensRed')(nav);
-var womensBraceletsRouter = require('./routes/womens/womensBracelets')(nav);
-var womensNecklacesRouter = require('./routes/womens/womensNecklaces')(nav);
-var womensScarvesRouter = require('./routes/womens/womensScarves')(nav);
-var womensShoesRouter = require('./routes/womens/womensShoes')(nav);
-*/
 const app = express();
+
+mongoose.connect('localhost:27017/shopapp');
+require('./configs/passport');
 
 // Setting up menu
 app.use((req, res, next) => {
     res.locals.nav = [
         {Link: '/', Text: 'Home'},
         {Link: '/mens', Text: 'Mens'},
-        {Link: '/womens', Text: 'Womens'},
-        {Link: '/signin', Text: 'Sign in'},
-        {Link: '/signup', Text: 'Sign up'}
+        {Link: '/womens', Text: 'Womens'}
         ];
     next();
 });
@@ -65,19 +39,31 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(validator());
 app.use(cookieParser());
 app.use(session({
-    secret: 'jfuerjevnerojblapmt',
+    secret: 'jfuerje',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: new sesstorage({ mongooseConnection: mongoose.connection }),
+    cookie: { maxAge: 200000 }
 }));
-//const csrf = csurf();
-//router.use(csrf);
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+/*--------------------------------------------*/
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'views')));
 
 app.use(breadcrumb());
+
+app.use((req, res, next) => {
+    res.locals.login = req.isAuthenticated();
+    res.locals.session = req.session;
+    next();
+});
 app.use('/', require('./routes/index'));
 
 // catch 404 and forward to error handler
