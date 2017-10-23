@@ -15,9 +15,9 @@
 <!-- Login form -->
 
 <div class="container">
-    <div class="row">
+    <div class="row justify-content-center">
     <div class="col-md-5 col-sm-12"><br><br>
-    <form id="form" name="form" class="form-signin" action="/signup" method="post">
+    <form id="form" name="form" action="/users/signup/" method="post">
         <h3 class="form-signin-heading">New user? Sign up here!</h3><br><br>
         <% if (hasErrors) {%>
         <div class="alert alert-danger">
@@ -26,8 +26,12 @@
             <%}%>
         </div>
         <%}%>
+
+        <h6>Name</h6>
+        <input type="text" name="name" id="name" class="form-control" placeholder="Your name" required autofocus><br>
+
         <h6>Enter your email</h6>
-        <input type="text" name="email" class="form-control" placeholder="Email address" required autofocus><br>
+        <input type="text" name="email" class="form-control" placeholder="Email address" required><br>
 
         <h6>Password</h6>
         <input type="password" name="password" id="password" class="form-control" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" required><br>
@@ -36,7 +40,8 @@
         <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" required><br>
 
         <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
-        <input type="submit" name="submit" class="btn btn-lg btn-primary btn-block" value="Sign Up"/>
+        <input type="submit" name="submit" class="btn btn-lg btn-primary btn-block" value="Sign Up"/><br>
+        <p class="align-middle">or quick <a href="/users/signin">sign in</a>..</p>
     </form>
     </div>
     </div>

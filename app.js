@@ -6,14 +6,14 @@ const favicon       = require('serve-favicon');
 const logger        = require('morgan');
 const cookieParser  = require('cookie-parser');
 const bodyParser    = require('body-parser');
-const session       = require('express-session');
 const csurf         = require('csurf');
 const breadcrumb    = require('express-url-breadcrumb');
 const mongoose      = require('mongoose');
+const session       = require('express-session');
 const passport      = require('passport');
 const flash         = require('connect-flash');
 const validator     = require('express-validator');
-const sesstorage    = require('connect-mongo')(session);
+const MongoStore    = require('connect-mongo')(session);
 
 const app = express();
 
@@ -45,8 +45,8 @@ app.use(session({
     secret: 'jfuerje',
     resave: false,
     saveUninitialized: false,
-    store: new sesstorage({ mongooseConnection: mongoose.connection }),
-    cookie: { maxAge: 200000 }
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    cookie: { maxAge: 180 * 60 * 1000 }
 }));
 app.use(flash());
 app.use(passport.initialize());
@@ -64,7 +64,8 @@ app.use((req, res, next) => {
     res.locals.session = req.session;
     next();
 });
-app.use('/', require('./routes/index'));
+
+app.use('/', require('./routes/catalog'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

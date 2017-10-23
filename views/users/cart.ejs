@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <% include ../partials/nav %>
+</nav>
+
+<!-- Cart Content -->
+<div class="container">
+    <% include ../partials/breadcrumbs %>
+
+<% if (products) {%>
+<div class="row">
+    <div class="col-sm-12">
+        <ul class="list-group">
+            <% for (var product in products) {%>
+            <li class="list-group-item">
+                <button class="btn btn-sm btn-default">Quantity: <b><%= products[product].qty %></b></button>
+                <strong> &nbsp;&nbsp;<%= products[product].item.name %> </strong>&nbsp;&nbsp;
+                <b class="text-info">$<%= products[product].price %></b>
+                <a href="/reduce/<%=products[product].item._id %>" class="btn btn-danger pull-right" role="button"><i class="fa fa-times" aria-hidden="true"></i></a>
+                <a href="remove/<%=products[product].item._id %>" class="btn btn-warning pull-right" role="button"><i class="fa fa-minus" aria-hidden="true"></i></a>
+                <img class="rounded float-left img-fluid" src="/images/<%= products[product].item.image_groups[0].images[0].link %>">
+                <br><br><div><%= products[product].item.long_description %></div>
+            </li><hr>
+            <%}%>
+        </ul>
+    </div>
+</div>
+<div class="row">
+        <strong>Total: $<%= totalPrice %></strong>
+</div>
+<hr>
+
+        <button type="button" class="btn btn-success">Continue</button>
+
+<%} else {%>
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+        <h2>Your cart is empty..</h2>
+    </div>
+</div>
+<%}%>
+
+</div> <!-- /container -->
+
+    <% include ../partials/footer %>
+
+    <% include confirm_pass %>
+
+</body>
+</html>

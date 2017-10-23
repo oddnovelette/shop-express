@@ -25,3 +25,11 @@ body {
 .pricing {
 	margin-bottom: 60px;
 }
+.fb {
+    background-color: #3B5998;
+    border-color: #3B5998;
+}
+.list-group-item img {
+    height: 200px;
+    margin-right: 20px;
+}
