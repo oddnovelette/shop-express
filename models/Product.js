@@ -20,4 +20,10 @@ const productSchema = new Schema({
     long_description: {type: String, required: true}
 });
 
-module.exports = mongoose.model('Product', productSchema);
+let Product;
+if (mongoose.models.Product) {
+    Product = mongoose.model('Product');
+} else {
+    Product = mongoose.model('Product', productSchema);
+}
+module.exports = Product;

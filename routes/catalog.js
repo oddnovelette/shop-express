@@ -39,13 +39,20 @@ router.post('/users/profile', usersController.profile_post);
 
 router.get('/users/logout', isLoggedIn, authController.logout);
 
+router.get('/auth/google', passport.authenticate('google', {scope:
+    ['https://www.googleapis.com/auth/plus.login']}));
+
+router.get('/auth/google/callback', passport.authenticate('google', {
+    successRedirect: '/users/profile',
+    failureRedirect: '/'
+}));
 
 //------------------Cart routes--------------------------------
 
 router.get('/shopping-cart/', cartController.cart);
 router.get('/to-cart/:id', cartController.to_cart);
-router.get('/reduce/:id', cartController.decrease);
-router.get('/remove/:id', cartController.remove);
+//router.get('/reduce/:id', cartController.decrease);
+//router.get('/remove/:id', cartController.remove);
 
 
 //------------------Catalog routes--------------------------------

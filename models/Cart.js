@@ -5,7 +5,7 @@ module.exports = function Cart(existingCart) {
     this.totalQty = existingCart.totalQty || 0;
     this.totalPrice = existingCart.totalPrice || 0;
 
-    this.add = function(item, id, img) {
+    this.add = function(item, id) {
         let storedItem = this.items[id];
         if (!storedItem) {
             storedItem = this.items[id] = {item: item, qty: 0, price: 0};

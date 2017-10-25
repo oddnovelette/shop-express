@@ -15,7 +15,10 @@
 <!-- Profile Content -->
 <div class="container">
     <% include ../partials/breadcrumbs %>
-    <h2>Hello, <span class="text-info"><%= user.name %></span></h2>
+    <h2>Hello, <span class="text-primary"><%= user.name %></span></h2>
+    <% if (user.token) {%>
+    <h6 class="text-right">You're signed via <span class="text-danger"><span class="fa fa-google-plus"></span> Google</span></h6><br>
+    <%}%>
     <div class="row">
 
     <div class="col-sm-9 float-left">
