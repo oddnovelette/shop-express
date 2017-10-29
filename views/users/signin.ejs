@@ -26,6 +26,9 @@
                     <%}%>
                 </div>
                 <%}%>
+                <% if (error && error.length > 0) { %>
+                <div class="alert alert-danger"><p><%= error %></p></div>
+                <% } %>
                 <h6>Enter your email</h6>
                 <input type="text" name="email" class="form-control" placeholder="Email address" required autofocus><br>
 
@@ -38,7 +41,8 @@
                 <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
                 <input type="submit" name="submit" class="btn btn-lg btn-block btn-primary" value="Sign in"/><br>
                 <a href="/auth/google" class="btn btn-lg btn-block btn-danger">Sign in with Google</a><br><br>
-                <p class="align-middle">or <a href="/users/signup">create new account</a>..</p>
+                <p>I forgot my <a href="/users/forgot">password</a>.</p>
+                <p class="text-right">I want to <a href="/users/signup">create new account</a>..</p>
             </form>
         </div>
     </div>

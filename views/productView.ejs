@@ -32,8 +32,17 @@
             <h3 class="my-3"><%=result[0].name%></h3>
             <img class="img-fluid" src="#" alt="">
             <p><%=result[0].long_description%></p>
-            <span class="price">Price: <%=result[0].price%>- <%=result[0].currency%></span><br><br><br>
-            <a href="/to-cart/<%=pid%>" class="btn btn-lg btn-success btn-block" role="button">Add to cart <i class="fa fa-cart-plus" aria-hidden="true"></i></a>
+            <span class="price">Price: <%=result[0].price%>- <%=result[0].currency%></span><br><br>
+
+                <p><select>
+                        <option>Choose currency</option>
+                        <option value="EUR">EUR: <%=eur%></option>
+                        <option value="CAD">CAD: <%=cad%></option>
+                        <option value="GBR">GBR: <%=gbr%></option>
+                    </select></p><br><br>
+
+            <a href="/to-cart/<%=pid%>" class="btn btn-lg btn-success btn-block" role="button">Add to cart <i class="fa fa-cart-plus" aria-hidden="true"></i></a><br>
+            <a href="/to-wishlist/<%=pid%>" class="btn btn-lg btn-info btn-block" role="button">Add to wishlist <i class="fa fa-calendar" aria-hidden="true"></i></a>
         </div>
     </div>
     <!-- /.row -->

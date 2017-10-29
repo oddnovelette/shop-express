@@ -6,7 +6,6 @@ const passport = require('passport');
  * Local login for users
  *
  * @module signin
- * @function
  * @param {Object} req
  * @param {Object} res
  * @param {Function} next
@@ -25,7 +24,6 @@ exports.signin = (req, res, next) => {
  * Local login for users - POST handler
  *
  * @module signin_post
- * @function
  * @param {Object} req
  * @param {Object} res
  * @param {Function} next
@@ -45,7 +43,6 @@ exports.signin_post = (req, res, next) => {
  * Local signup for new users
  *
  * @module signup
- * @function
  * @param {Object} req
  * @param {Object} res
  * @param {Function} next
@@ -64,7 +61,6 @@ exports.signup = (req, res, next) => {
  * Local sign up for users - POST handler
  *
  * @module signup_post
- * @function
  * @param {Object} req
  * @param {Object} res
  * @param {Function} next
@@ -84,7 +80,6 @@ exports.signup_post = (req, res, next) => {
  * Logout authorized users
  *
  * @module logout
- * @function
  * @param {Object} req
  * @param {Object} res
  * @param {Function} next

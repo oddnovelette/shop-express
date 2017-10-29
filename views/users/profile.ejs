@@ -21,10 +21,31 @@
     <%}%>
     <div class="row">
 
-    <div class="col-sm-9 float-left">
-        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
+    <div class="col-sm-8 float-left">
+        <% if (products) {%>
+        <br><h3 class="text-center"><b>Your wishlist</b></h3><br>
+        <div class="row"><br>
+                <ul class="list-group">
+                    <% for (var product in products) {%>
+                    <li class="list-group-item">
+                        <button class="btn btn-sm btn-default">Quantity: <b><%= products[product].qty %></b></button>
+                        <strong> &nbsp;&nbsp;<%= products[product].item.name %> </strong>&nbsp;&nbsp;
+                        <b class="text-info">$<%= products[product].price %></b>
+                        <img class="rounded float-left img-fluid" src="/images/<%= products[product].item.image_groups[0].images[0].link %>">
+                        <br><br><div><%= products[product].item.long_description %></div>
+                    </li><hr>
+                    <%}%>
+                </ul>
+        </div>
     </div>
-    <div class="col-sm-3 float-right">
+        <%} else {%>
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+                <h2>Your wishlist is empty..</h2>
+            </div>
+        </div>
+        <%}%>
+    <div class="col-sm-4 float-right">
 
                     <form class="form-horizontal form" action="/users/profile" method="POST">
 
@@ -39,12 +60,8 @@
                                 <input type="text" class="form-control" id="email" name="email" placeholder="" value="<%= user.email %>">
                         </div>
 
-                        <div class="form-group hidden">
-                            <label class="control-label" for="password">Change your password</label>
-                                <input type="password" id="password" name="password" class="form-control" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
-                        </div>
                         <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
-                        <button type="submit" class="btn btn-primary">Update profile</button><br>
+                        <button type="submit" class="btn btn-primary btn-block">Update profile</button><br>
                         <%}%>
                     </form>
 
@@ -57,8 +74,6 @@
 </div> <!-- /container -->
 
 <% include ../partials/footer %>
-
-<% include confirm_pass %>
 
 </body>
 </html>

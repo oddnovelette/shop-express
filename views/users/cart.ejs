@@ -25,7 +25,6 @@
                 <button class="btn btn-sm btn-default">Quantity: <b><%= products[product].qty %></b></button>
                 <strong> &nbsp;&nbsp;<%= products[product].item.name %> </strong>&nbsp;&nbsp;
                 <b class="text-info">$<%= products[product].price %></b>
-                <a href="/reduce/<%=products[product].item._id %>" class="btn btn-danger pull-right" role="button"><i class="fa fa-times" aria-hidden="true"></i></a>
                 <a href="to-cart/<%=products[product].item._id %>" class="btn btn-primary pull-right" role="button"><i class="fa fa-plus" aria-hidden="true"></i></a>
                 <img class="rounded float-left img-fluid" src="/images/<%= products[product].item.image_groups[0].images[0].link %>">
                 <br><br><div><%= products[product].item.long_description %></div>
@@ -39,7 +38,7 @@
 </div>
 <hr>
 
-        <button type="button" class="btn btn-primary btn-lg">Continue</button>
+    <a href="/users/profile/" class="btn btn-primary btn-lg"><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
 
 <%} else {%>
 <div class="row">
@@ -52,8 +51,6 @@
 </div> <!-- /container -->
 
     <% include ../partials/footer %>
-
-    <% include confirm_pass %>
 
 </body>
 </html>

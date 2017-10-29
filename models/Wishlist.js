@@ -1,16 +1,15 @@
 'use strict';
 
 /**
- * Module for shopping cart basic functionality
+ * Module for wishlist
  *
- * @module Cart
- * @param {Object} existingCart
+ * @module Wishlist
+ * @param {Object} existingWishlist
  * @return {Array} arr
  */
-module.exports = function Cart(existingCart) {
-    this.items = existingCart.items || {};
-    this.totalQty = existingCart.totalQty || 0;
-    this.totalPrice = existingCart.totalPrice || 0;
+module.exports = function Wishlist(existingWishlist) {
+    this.items = existingWishlist.items || {};
+    this.totalQty = existingWishlist.totalQty || 0;
 
     this.add = function(item, id) {
         let storedItem = this.items[id];
@@ -20,7 +19,6 @@ module.exports = function Cart(existingCart) {
         storedItem.qty++;
         storedItem.price = storedItem.item.price * storedItem.qty;
         this.totalQty++;
-        this.totalPrice += storedItem.item.price;
     };
 
     this.generateArray = function() {

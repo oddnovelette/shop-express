@@ -2,6 +2,15 @@
 
 const Category = require('../models/Category');
 
+/**
+ * Render the homepage
+ *
+ * @module index
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ * @return {undefined}
+ */
 exports.index = (req, res, next) => {
     Category.find( {}, 'page_title page_description',
         (err, results) => {
@@ -10,6 +19,15 @@ exports.index = (req, res, next) => {
     });
 };
 
+/**
+ * Render the category
+ *
+ * @module category
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ * @return {undefined}
+ */
 exports.category = (req, res, next) => {
         Category.aggregate([
             {$unwind: '$categories'},
@@ -21,6 +39,15 @@ exports.category = (req, res, next) => {
         });
 };
 
+/**
+ * Render the subcategory
+ *
+ * @module subcategory
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ * @return {undefined}
+ */
 exports.subcategory = (req, res, next) => {
     Category.aggregate([
             {$unwind: '$categories'},

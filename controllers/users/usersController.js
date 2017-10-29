@@ -3,26 +3,49 @@
 const Order = require('../../models/Order');
 const Cart = require('../../models/Cart');
 const User = require('../../models/User');
+const Wishlist = require('../../models/Wishlist');
 
+/**
+ * Render profile for users
+ *
+ * @module profile
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ * @return {undefined}
+ */
 exports.profile = (req, res, next) => {
     Order.find({
         user: req.user
     }, (err, orders) => {
         if (err) return res.write('Error occurred');
 
-        let cart;
-        orders.forEach((order) => {
-            cart = new Cart(order.cart);
-            order.items = cart.generateArray();
-        });
+        if (!req.session.wishlist) {
+            return res.render('users/profile', {
+                csrfToken: req.csrfToken(),
+                user: req.user,
+                products: null
+            });
+        }
+
+        let wishlist = new Wishlist(req.session.wishlist);
         res.render('users/profile', {
             csrfToken: req.csrfToken(),
-            orders: orders,
+            products: wishlist.generateArray(),
             user: req.user
         });
     });
 };
 
+/**
+ * Handle the user account credentials updating
+ *
+ * @module profile_post
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ * @return {undefined}
+ */
 exports.profile_post = (req, res, next) => {
     if (req.body.email) {
         User.findOne({ email: req.body.email },
@@ -46,6 +69,15 @@ exports.profile_post = (req, res, next) => {
     res.end();
 };
 
+/**
+ * Completely delete user's account
+ *
+ * @module delete_account
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ * @return {undefined}
+ */
 exports.delete_account = (req, res, next) => {
 
     User.findOneAndRemove({ email: req.user.email },

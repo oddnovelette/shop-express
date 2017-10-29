@@ -2,6 +2,15 @@
 
 const Product = require('../models/Product');
 
+/**
+ * Render the product list
+ *
+ * @module items
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ * @return {undefined}
+ */
 exports.items = (req, res, next) => {
 
         Product.aggregate([
